@@ -8,10 +8,10 @@
 		<header>
 			<ul>
 				<li class="fl">
-					<img src="../../assets/img/logo.png"/>
-					<span>车联网业务平台</span>
+					<!-- <img src="../../assets/img/logo.png"/> -->
+					<span>业务平台</span>
 				</li>
-				<li class="fr" v-if="androidUrl || iosUrl">
+				<!-- <li class="fr" v-if="androidUrl || iosUrl">
 					<span>APP下载:</span>
 					<div class="fl" v-if="androidUrl">
 						<img :src="android ? androidIconShow : androidIconHide" class="ewm-icon android-icon" @mouseover="ewmShowHide('over', 'android')" @mouseout="ewmShowHide('hide', 'android')"/>
@@ -22,21 +22,21 @@
 						<img :src="iosUrl" :class="ios ? 'ewm ewmShow' : 'ewm ewmHide'"/>
 					</div>
 					<span class="clear"></span>
-				</li>
+				</li> -->
 			</ul>
 		</header>
 		
 		<el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px" class="card-box login-form">			
 			<div class="login-box">
 				<p>登录</p>
-				<el-form-item prop="entCode">
+				<!-- <el-form-item prop="entCode">
 					<el-input prefix-icon="icon-c-qiyexinxi" name="entCode" v-model="loginForm.entCode" type="text"  autoComplete="off" placeholder="企业标识" style="width:100%;" clearable></el-input>
-				</el-form-item>
+				</el-form-item> -->
 				<el-form-item prop="account">
-					<el-input  prefix-icon="icon-c-yonghu" name="account" v-model="loginForm.account" type="text"   autoComplete="off" placeholder="账号" style="width: 100%;" clearable></el-input>
+					<el-input  prefix-icon="icon-c-yonghu" name="account" v-model="loginForm.account" type="text"   autoComplete="off" placeholder="账号：admin" style="width: 100%;" clearable></el-input>
 				</el-form-item>
 				<el-form-item prop="password">
-					<el-input  prefix-icon="icon-c-mima" name="password" v-model="loginForm.password" type="password"   autoComplete="off" placeholder="密码" style="width: 100%;" clearable></el-input>
+					<el-input  prefix-icon="icon-c-mima" name="password" v-model="loginForm.password" type="password"   autoComplete="off" placeholder="密码：admin123456" style="width: 100%;" clearable></el-input>
 				</el-form-item>
 				<el-form-item prop="identifyCode">
 				    <el-input  prefix-icon="icon-c-anquan" name="identifyCode" v-model="loginForm.identifyCode" @keyup.enter.native.prevent="handleLogin" style="width:145px;" placeholder="验证码" clearable></el-input>
@@ -145,7 +145,7 @@
 		    };
 			return {
 				loginForm: {
-					entCode:'',
+					entCode:'aa',
 					account: '',
 					password: '',
 					identifyCode: '',
@@ -267,6 +267,13 @@
 					if(formData.validates){
 						formData.param.flags = true;
 						vm.logining = true;
+						debugger
+						if(formData.param.account != "admin" || formData.param.password != "admin123456"){
+							Message.error("账号或密码错误");
+							vm.loginForm.identifyCode = "";
+							vm.logining = false;
+							retutn
+						}
 			            vm.$store.dispatch('Login', formData.param).then((res) => {
 			            	vm.$store.dispatch('GetInfo').then(res => { // 拉取user_info
 								vm.$router.push({ path: '/' });  
@@ -666,7 +673,7 @@
 	                @include cursor;
 	                @include borderRadius;
 	                @include size(100%, 36px);
-	                background: $blueColor;
+	                background: #67d3e0;
 	                color: #fff;
 	                font-size: $fontSize16;
 	                -webkit-transition: all .1s;  //css3 有些浏览器不支持 Chrome || Safari
@@ -675,10 +682,10 @@
 				    -o-transition: all .1s;//css3 有些浏览器不支持 Opera
 	                border: none; 
 	                &:hover{
-	                    background-color: #397cd7;
+	                    background-color: #39c4d5;
 	                }
 	                &:active{
-	                    background-color: #67d3e0;
+	                    background-color: #39c4d5;
 	                }
 	            }
 	            .forget-pass{
