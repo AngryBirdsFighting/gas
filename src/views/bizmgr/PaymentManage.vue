@@ -36,11 +36,11 @@
 				<el-form-item>
 					<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="(getList(true))">查询</el-button>
 				</el-form-item>
-				<el-form-item>
-					<el-button v-if="permBtn.car_add" class="filter-item btnColor" type="primary" icon="el-icon-plus" @click="handleCreate">新增</el-button>
+				<el-form-item v-if="permBtn.car_add">
+					<el-button class="filter-item btnColor" type="primary" icon="el-icon-plus" @click="handleCreate">新增</el-button>
 				</el-form-item>
-				<el-form-item>
-					<el-button v-if="permBtn.car_export" class="filter-item" type="primary" icon="el-icon-download" @click="exportFormLists">导出</el-button>
+				<el-form-item v-if="permBtn.car_export">
+					<el-button class="filter-item" type="primary" icon="el-icon-download" @click="exportFormLists">导出</el-button>
 				</el-form-item>
 				<!--导入按钮以及弹框  start-->
 				<el-form-item>
