@@ -2,7 +2,7 @@
  * @Author: Wang Chao 
  * @Date: 2019-01-16 13:50:55 
  * @Last Modified by: Wang Chao
- * @Last Modified time: 2019-01-16 14:33:54
+ * @Last Modified time: 2019-01-18 11:30:00
  * @Description:  缴费管理
  */
 
@@ -37,10 +37,10 @@
 					<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="(getList(true))">查询</el-button>
 				</el-form-item>
 				<el-form-item>
-					<el-button v-if="permBtn.car_add" class="filter-item btnColor" type="primary" icon="el-icon-plus" @click="handleCreate">新增</el-button>
+					<el-button v-if="permBtn.car_add" class="filter-item btnColor" type="primary" icon="el-icon-plus" @click="handleCreate">缴费</el-button>
 				</el-form-item>
 				<el-form-item>
-					<el-button v-if="permBtn.car_export" class="filter-item" type="primary" icon="el-icon-download" @click="exportFormLists">导出</el-button>
+					<el-button v-if="permBtn.car_export" class="filter-item" type="primary" icon="el-icon-download" @click="exportFormLists">售气</el-button>
 				</el-form-item>
 				<!--导入按钮以及弹框  start-->
 				<el-form-item>
