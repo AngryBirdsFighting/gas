@@ -142,27 +142,4 @@
 	.menu5-iocn {
 		background-image: url(../../assets/img/menu5-iocn.png);
 	}
-	
-	.show_hide_menu {
-		height: 100%;
-		width: 10px;
-		background-color: rgba(255,255,255,0);
-		position: absolute;
-		top: 0;
-		right: 0;
-		z-index: 10;
-		div{
-			position: relative;
-			width: 10px;
-			height: 60px;
-			top: 47%;
-			cursor: pointer;
-		}
-		.menu_show{
-			background: url(../../assets/img/menu-hide.png) no-repeat center center;
-		}
-		.menu_hide{
-			background: url(../../assets/img/menu-show.png) no-repeat center center;
-		}
-	}
 </style>
