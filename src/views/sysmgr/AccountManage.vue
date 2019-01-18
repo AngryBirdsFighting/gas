@@ -1,7 +1,7 @@
 /**
  * @Author:      dousp
  * @DateTime:    2018-03-21
- * @Description: 用户管理组件
+ * @Description: 用户管理
  */
 <template>
 	<div>
@@ -20,7 +20,7 @@
 						<el-option label="停用" value="N"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="组织机构">
+				<!-- <el-form-item label="组织机构">
 					<depart_select @deptIdChange="deptCurrentChange"></depart_select>
 				</el-form-item>
 				<el-form-item label="联系人">
@@ -28,7 +28,7 @@
 				</el-form-item>
 				<el-form-item label="手机">
 					<el-input v-model="listQuery.phone" placeholder="请输入手机" clearable></el-input>
-				</el-form-item>
+				</el-form-item> -->
 				<el-form-item>
 					<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="getList(true)">查询</el-button>
 					<el-button v-if="permBtn.account_add" class="filter-item btnColor" type="primary" icon="el-icon-plus" @click="handleCreate(true)">新增</el-button>
@@ -40,23 +40,23 @@
 				v-loading="listLoading" element-loading-text="拼命加载中">
 			<el-table-column align="center" label='账号' prop="account" show-overflow-tooltip></el-table-column>
 			<el-table-column align="center" label="昵称" prop="accountNick" show-overflow-tooltip></el-table-column>
-			<el-table-column align="center" label="手机" prop="phone" width="120"></el-table-column>
-			<el-table-column align="center" label="手机登录" width="80">
+			<el-table-column align="center" label="手机" prop="phone"></el-table-column>
+			<el-table-column align="center" label="APP登录">
 				<template slot-scope="scope">
 					<!-- allowMobile 	Y:允许N:不允许-->
 					<div v-if="scope.row.allowMobile == 'Y'">允许</div>
 					<div v-else>不允许</div>
 				</template></el-table-column>	
-			<el-table-column align="center" label="状态" width="50">
+			<el-table-column align="center" label="状态">
 				<template slot-scope="scope">
 					<div v-if="scope.row.status == 'Y'">启用</div>
 					<div v-else>停用</div>
 				</template>
 			</el-table-column>
-			<el-table-column align="center" label="组织" prop="deptName" show-overflow-tooltip></el-table-column>
-			<el-table-column align="center" label="联系人" prop="contacts" show-overflow-tooltip></el-table-column>
-			<el-table-column align="center" label="邮箱" prop="email" show-overflow-tooltip></el-table-column>
-			<el-table-column align="center" label="操作" width="140">
+			<el-table-column align="center" label="所属营业厅" prop="deptName" show-overflow-tooltip></el-table-column>
+			<!-- <el-table-column align="center" label="联系人" prop="contacts" show-overflow-tooltip></el-table-column>
+			<el-table-column align="center" label="邮箱" prop="email" show-overflow-tooltip></el-table-column> -->
+			<el-table-column align="center" label="操作">
 				<template slot-scope="scope">
 					<el-button v-if="permBtn.account_role" class="btn role" @click="roleManage(scope.$index, scope.row)" title="角色管理"></el-button>
 					<el-button v-if="permBtn.account_check" class="btn check" size="small" @click="check(scope.$index, scope.row)" title="查看"></el-button>
