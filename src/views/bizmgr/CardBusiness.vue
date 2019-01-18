@@ -29,10 +29,10 @@
 					<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="(getList(true))">查询</el-button>
 				</el-form-item>
 				<el-form-item>
-					<el-button v-if="permBtn.car_add" class="filter-item btnColor" type="primary" icon="el-icon-plus" @click="handleCreate">新增</el-button>
+					<el-button v-if="!permBtn.car_add" class="filter-item btnColor" type="primary" icon="el-icon-plus" @click="handleCreate">新增</el-button>
 				</el-form-item>
 				<el-form-item>
-					<el-button v-if="permBtn.car_export" class="filter-item" type="primary" icon="el-icon-download" @click="exportFormLists">导出</el-button>
+					<el-button v-if="!permBtn.car_export" class="filter-item" type="primary" icon="el-icon-download" @click="exportFormLists">导出</el-button>
 				</el-form-item>
 				<!--导入按钮以及弹框  start-->
 				<!-- <el-form-item>
@@ -46,20 +46,20 @@
 		</div>
 		
 		<!-- 表格 -->
-		<el-table ref="multipleTable" :data="list" :height="height"  fit highlight-current-row v-loading="listLoading" element-loading-text="拼命加载中">
-			<el-table-column align="center" label='住户名' prop="userName"></el-table-column>
-			<el-table-column align="center" label="电话" prop="phone"></el-table-column>
+		<el-table ref="multipleTable" :data="list" :height="height" highlight-current-row v-loading="listLoading" element-loading-text="拼命加载中">
+			<el-table-column align="center" label='住户名' prop="userName" width="100"></el-table-column>
+			<el-table-column align="center" label="电话" prop="phone" width="100"></el-table-column>
 		    <el-table-column align="center" label="小区" prop="community"></el-table-column>
 			<el-table-column align="center" label="条形码" prop="barCode"></el-table-column>
-			<el-table-column align="center" label="采集时间" prop="collectionTime"></el-table-column>
+			<el-table-column align="center" label="采集时间" prop="collectionTime" width="200"></el-table-column>
 			<el-table-column align="center" label="计费方式" prop="billingType"></el-table-column>
-			<el-table-column align="center" label="昨日用气量/L" prop="yesterdayGasMeasure"></el-table-column>
-			<el-table-column align="center" label="累计用气量/L" prop="allGasMeasure"></el-table-column>
-			<el-table-column align="center" label="操作" width="150">
+			<el-table-column align="center" label="昨日用气量/L" prop="yesterdayGasMeasure" width="130"></el-table-column>
+			<el-table-column align="center" label="累计用气量/L" prop="allGasMeasure" width="130"></el-table-column>
+			<el-table-column align="center" label="操作" width="150px">
 				<template slot-scope="scope">
-					<el-button v-if="permBtn.group_check" class="btn check" size="small" @click="check(scope.$index, scope.row)" title="查看"></el-button>
-					<el-button v-if="permBtn.group_modify" class="btn update" size="small" @click="handleEdit(scope.$index, scope.row)" title="修改"></el-button>
-					<el-button v-if="permBtn.group_delete" class="btn delete" size="small" @click="handleDelete(scope.$index, scope.row)" title="删除"></el-button>
+					<el-button v-if="!permBtn.group_check" class="btn check" size="small" @click="check(scope.$index, scope.row)" title="查看"></el-button>
+					<el-button v-if="!permBtn.group_modify" class="btn update" size="small" @click="handleEdit(scope.$index, scope.row)" title="修改"></el-button>
+					<el-button v-if="!permBtn.group_delete" class="btn delete" size="small" @click="handleDelete(scope.$index, scope.row)" title="删除"></el-button>
 				</template>
 			</el-table-column>
 		</el-table>

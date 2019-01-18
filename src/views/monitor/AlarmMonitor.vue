@@ -40,6 +40,9 @@
 						</el-option> -->
 					</el-select>					 
 				</el-form-item>
+				<el-form-item label="告警时间" >
+					<date-time-picker ref="datePicker" :isTodayBefore="true"></date-time-picker>
+				</el-form-item>
 				<el-form-item>
 					<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="(getList(true))">查询</el-button>
 				</el-form-item>
@@ -72,11 +75,13 @@
 	import { validate } from 'utils/validate';
 	import { utils } from 'src/utils';
 	import Pagination from '../../components/Pagination';
+	import DateTimePicker from '../../components/DateTimePicker';//日期组件
 
 	export default {
 		components: {
-			 'pagination': Pagination
-		 },
+			'pagination': Pagination,
+			'date-time-picker': DateTimePicker ,//日期组件
+		},
 		data() {
 			const vm =this;
 			return {

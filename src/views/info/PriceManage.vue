@@ -3,7 +3,7 @@
  * @Date: 2019-01-16 13:50:55 
  * @Last Modified by: qiaozp
  * @Last Modified time: 2019-01-16 14:33:54
- * @Description:  营业网点管理
+ * @Description:  价格管理
  */
 
 <template>
@@ -12,13 +12,20 @@
 		<!-- 搜索条件 -->
 		<div class="filter-container">
 			<el-form :inline="true" :model="listQuery" class="demo-form-inline">
-				<el-form-item label="营业厅名称">
-					<el-input v-model="listQuery.name" placeholder="请输入营业厅名称" clearable></el-input>
+				<el-form-item label="价格方案名">
+					<el-input v-model="listQuery.name" placeholder="请输入价格方案名" clearable></el-input>
+				</el-form-item>
+                <el-form-item label="用户类型">
+					<el-select v-model="listQuery.powerType" clearable placeholder="请选择用户">
+						<el-option label="请选择" value=""></el-option>
+						<el-option label="民用" value="1"></el-option>
+						<el-option label="工业" value="2"></el-option>
+					</el-select>					 
 				</el-form-item>
 				<el-form-item>
 					<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="(getList(true))">查询</el-button>
 				</el-form-item>
-                <el-form-item>
+                <el-form-item>  
 					<el-button class="filter-item" type="primary" icon="el-icon-plus" @click="handleCreate">新增</el-button>
 				</el-form-item>
 			</el-form>
@@ -26,17 +33,18 @@
 		
 		<!-- 表格 -->
 		<el-table ref="multipleTable" :data="list" :height="height"  fit highlight-current-row v-loading="listLoading" element-loading-text="拼命加载中">
-			<el-table-column align="center" label='营业厅名称' prop="carNum"></el-table-column>
-			<el-table-column align="center" label="营业厅电话" prop="deptName"></el-table-column>
-		    <el-table-column align="center" label="联系人" prop="carBrand"></el-table-column>
-			<el-table-column align="center" label="地市" prop="carModel"></el-table-column>
-			<el-table-column align="center" label="区县" prop="powerType"></el-table-column>
-			<el-table-column align="center" label="地址" prop="powerType"></el-table-column>
-			<el-table-column align="center" label="备注" prop="powerType"></el-table-column>
+			<el-table-column align="center" label='用户类型' prop="carNum"></el-table-column>
+			<el-table-column align="center" label="价格方案名" prop="deptName"></el-table-column>
+		    <el-table-column align="center" label="阶梯单价1" prop="carBrand"></el-table-column>
+			<el-table-column align="center" label="阶梯用量1" prop="carModel"></el-table-column>
+			<el-table-column align="center" label="阶梯单价2" prop="carBrand"></el-table-column>
+			<el-table-column align="center" label="阶梯用量2" prop="carModel"></el-table-column>
+            <el-table-column align="center" label="阶梯单价3" prop="carBrand"></el-table-column>
+			<el-table-column align="center" label="阶梯用量3" prop="carModel"></el-table-column>
+			<el-table-column align="center" label="生效日期" prop="carModel"></el-table-column>
 			<el-table-column align="center" label="操作" width="150">
 				<template slot-scope="scope">
                     <el-button v-if="!permBtn.group_modify" class="btn update" size="small" @click="handleEdit(scope.$index, scope.row)" title="修改"></el-button>
-					<el-button v-if="!permBtn.group_delete" class="btn delete" size="small" @click="handleDelete(scope.$index, scope.row)" title="删除"></el-button>
 				</template>
 			</el-table-column>
 		</el-table>
