@@ -1,10 +1,10 @@
 /**
- * @Author:      qinbb
- * @DateTime:    2018-02-01 18:41:32
+ * @Author:      qiaozp
+ * @DateTime:    2019-01-16 18:41:32
  * @Description: 地址错误组件
  */
  <template>
-  <div style="background:#f0f2f5;margin-top: -20px;">
+  <div>
     <div class="wscn-http404">
       <div class="pic-404"> 
         <img class="pic-404__parent" src="../../assets/img/404-error.png" alt="404">
@@ -25,7 +25,7 @@
   export default {
     computed: {
       message() {
-        return '为找到相关页面......'
+        return '未找到相关页面......'
       }
     }
   }
@@ -41,7 +41,6 @@
     .pic-404 {
       position: relative;
       float: left;
-      width: 600px;
       padding: 150px 0;
       overflow: hidden;
       &__parent {
@@ -153,8 +152,7 @@
     .bullshit {
       position: relative;
       float: left;
-      width: 300px;
-      padding: 150px 0;
+      padding: 200px 0 0 0;
       overflow: hidden;
       &__oops {
         font-size: 32px;
