@@ -36,7 +36,7 @@ module.exports = {
         // 例如将'localhost:2018/login'代理到'http://192.168.1.120:8085/mockjsdata/4/auth/login'
         proxyTable: {
             '/proxy': {  
-                  target: 'https://www.easy-mock.com/mock/5c3d47eb95b2d32cb1e958ce/gas',
+                target: 'https://www.easy-mock.com/mock/5c3d47eb95b2d32cb1e958ce/gas',
                 changeOrigin : true,//允许跨域
                 //将对资源的请求重定向到另一路径
                 pathRewrite: {
