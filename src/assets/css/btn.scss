@@ -148,3 +148,17 @@ $panGreen: #30B08F;
 .rules{background: url(../img/rules.png) no-repeat center center !important;}
 .order{background: url(../img/work-order.png) no-repeat center center !important;}
 .gnore{background: url(../img/gnore.png) no-repeat center center !important;}
+.before-wait{background: url(../img/before-wait.png) no-repeat center center !important;}
+.waiting{
+  background: url(../img/waiting.png) no-repeat center center !important;
+  animation: wait-spin infinite 5s linear;
+}
+@keyframes wait-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.after-wait{background: url(../img/after-wait.png) no-repeat center center !important;}

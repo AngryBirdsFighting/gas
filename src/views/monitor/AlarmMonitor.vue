@@ -1,8 +1,8 @@
 /*
  * @Author: qiaozp 
  * @Date: 2019-01-16 13:50:55 
- * @Last Modified by: qiaozp
- * @Last Modified time: 2019-01-16 14:33:54
+ * @Last Modified by: zhipeng qiao
+ * @Last Modified time: 2019-01-21 15:47:00
  * @Description:  告警监控
  */
 
@@ -58,7 +58,7 @@
 			<el-table-column align="center" label="告警时间" prop="powerType"></el-table-column>
 			<el-table-column align="center" label="操作" width="150">
 				<template slot-scope="scope">
-					<el-button v-if="!permBtn.group_check" class="btn order" size="small" @click="assign(scope.$index, scope.row)" title="派发"></el-button>
+					<el-button v-if="!permBtn.group_check" class="btn order" size="small" @click="assign(scope.$index, scope.row)" title="派发工单"></el-button>
 					<el-button v-if="!permBtn.group_modify" class="btn gnore" size="small" @click="ignore(scope.$index, scope.row)" title="忽略"></el-button>
 				</template>
 			</el-table-column>
@@ -244,7 +244,7 @@
 					// 	}
 					// }).catch(error => {});
 				}).catch(() => {
-					Message.info({message: '已取消删除'});          
+					Message.info({message: '已取消删除', duration: 1000});          
 				});
 			},
 

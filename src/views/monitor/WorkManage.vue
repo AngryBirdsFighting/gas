@@ -1,8 +1,8 @@
 /*
  * @Author: qiaozp 
  * @Date: 2019-01-16 13:50:55 
- * @Last Modified by: qiaozp
- * @Last Modified time: 2019-01-16 14:33:54
+ * @Last Modified by: zhipeng qiao
+ * @Last Modified time: 2019-01-21 15:49:38
  * @Description:  工单管理
  */
 
@@ -13,10 +13,10 @@
 		<div class="filter-container">
 			<el-form :inline="true" :model="listQuery" class="demo-form-inline">
 				<el-form-item label="工单编号">
-					<el-input v-model="listQuery.equImei" placeholder="请输入工单编号" clearable></el-input>
+					<el-input v-model="listQuery.orderNum" placeholder="请输入工单编号" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="工单状态">
-					<el-select v-model="listQuery.powerType" clearable placeholder="请选择状态">
+					<el-select v-model="listQuery.orderType" clearable placeholder="请选择状态">
 						<el-option label="未处理" value="-1"></el-option>
 						<el-option label="处理中" value="0"></el-option>
 						<el-option label="已处理" value="1"></el-option>
@@ -30,15 +30,23 @@
 		
 		<!-- 表格 -->
 		<el-table ref="multipleTable" :data="list" :height="height"  fit highlight-current-row v-loading="listLoading" element-loading-text="拼命加载中">
-			<el-table-column align="center" label='工单编号' prop="carNum"></el-table-column>
-			<el-table-column align="center" label="工单状态" prop="deptName"></el-table-column>
-		    <el-table-column align="center" label="处理人" prop="carBrand"></el-table-column>
-			<el-table-column align="center" label="派发人" prop="carModel"></el-table-column>
-			<el-table-column align="center" label="派发时间" prop="powerType"></el-table-column>
-			<el-table-column align="center" label="处理详情" prop="powerType"></el-table-column>
-			<el-table-column align="center" label="操作" width="80">
+			<el-table-column align="center" label='工单编号' prop="orderNum"></el-table-column>
+			<el-table-column align="center" label="工单状态" prop="orderType">
 				<template slot-scope="scope">
-					<el-button v-if="!permBtn.group_check" class="btn check" size="small" @click="check(scope.$index, scope.row)" title="处理"></el-button>
+					<span v-if="scope.row.orderType == -1">未处理</span>
+					<span v-else="scope.row.orderType == 0">处理中</span>
+					<span v-else="scope.row.orderType == 1">已处理</span>
+				</template>
+			</el-table-column>
+		    <el-table-column align="center" label="处理人" prop="personnel"></el-table-column>
+			<el-table-column align="center" label="派发人" prop="paiName"></el-table-column>
+			<el-table-column align="center" label="派发时间" prop="time"></el-table-column>
+			<el-table-column align="center" label="处理详情" prop="info"></el-table-column>
+			<el-table-column align="center" label="操作" width="80">
+				<template slot-scope="scope">	
+					<el-button v-if="scope.row.orderType == -1" class="btn before-wait" size="small" title="待处理"></el-button>
+					<el-button v-if="scope.row.orderType == 0" class="btn waiting" size="small" title="处理中"></el-button>
+					<el-button v-if="scope.row.orderType == 1" class="btn after-wait" size="small" title="已处理"></el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -64,14 +72,7 @@
 			return {
 				//按钮的权限 查询query 新增add   true 显示  false 隐藏
 				permBtn:{
-	                car_add: false,
-					car_delete: false, 
-					car_Modify: false, 
-					car_check: false, 
-					car_import: false,
-					car_export: false,
-					equment_Rule: false,
-					driver_Rule: false
+	                
 				},
 				list:[], //表格list
 				total: 0,
@@ -81,12 +82,8 @@
 				listQuery: {
 					iDisplayLength: 10,
 					iDisplayStart: 0,
-					powerType: "",
-					useType: "",
-					driverName: "",
-					deptId: "",
-					carNum: "",
-					equImei: "",//设备imei
+					orderNum: "",
+					orderType: ""
 				},
 			}
 		},
@@ -125,7 +122,7 @@
 				vm.listLoading = true;
 				//调用接口
 				let param = JSON.parse(JSON.stringify(vm.listQuery));
-		        vm.$instance.post("/proxy/bizmgr/car/findCarList", param).then(res =>{	
+		        vm.$instance.post("/proxy/monitor/work", param).then(res =>{
 					vm.listLoading = false;
 		          	if(res.status == 200){
 		                vm.list = res.data.data;
@@ -145,99 +142,12 @@
 				this.listQuery.iDisplayStart = pageData.iDisplayStart;
 				this.listQuery.iDisplayLength = pageData.iDisplayLength;
 				this.getList();
-			},	
+			},
 		}
 		
 	}
 	
 </script>
 <style rel="stylesheet/scss" scope lang="scss">
-	.driver-table tbody tr:nth-child(odd){
-		background: #fff;
-	}
-	.device-imei>div>div {
-		cursor: pointer;
-		width: 160px;
-		height: 30px;
-		line-height: 30px;
-		padding: 0 10px;
-		color: #c0c4cc;
-		border: 1px solid #dcdfe6;
-		border-radius: 4px;
-	}
 	
-	.box .el-dialog {
-		width: 25%;
-	}
-	
-	.el-tabs__nav-wrap::after{
-		background: none;
-	}
-	
-	.el-tabs__item{
-		border: 1px solid #e9e9e9;
-		text-align: center;
-		border-radius: 4px;
-		-webkit-border-radius: 4px;
-    	-moz-border-radius: 4px;
-    	padding: 0 30px !important;
-	}
-	.el-tabs__item.is-active{
-		background: #1e4d78;
-		border: 1px solid #1e4d78;
-		color: #fff;
-	}
-	.el-tabs__active-bar{
-		background: none;
-	}
-	.box form{
-		padding-left: 50px;
-	}
-	.dialogDeptTree {
-		border: 1px solid #ddd;
-		max-height: 150px;
-		overflow-y: auto; 
-	}
-	.text-btn{
-		cursor: pointer;
-		color: #67d3e0;
-	}
-	.equimei-dialog{
-		.el-form-item__content{
-			width: 227px!important;
-			.el-select, .el-input{
-				width: 100%;
-			}
-		}
-		.equimei-text{
-			color: #969696;
-			font-size: 12px;
-			text-align: center;
-		}		
-	}
-	.confirm{
-		& span, & i{
-			display: inline-block;
-			vertical-align: middle;
-		}
-		& .confirm-top{
-			text-align: center;
-			font-size: 20px;
-		    & span, & i{
-				display: inline-block;
-				vertical-align: middle;
-			}
-			& .confirm-text{				
-                font-weight: 700;				
-			}
-		
-		}
-		& .confirm-bottom{
-			margin-top: 20px;
-			text-align: center;
-			& span{
-				width: 35%;
-			}
-		}	
-	}
 </style>
