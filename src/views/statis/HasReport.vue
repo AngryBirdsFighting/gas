@@ -34,6 +34,13 @@
 				<el-form-item label="电话">
 					<el-input v-model="listQuery.equImei" placeholder="请输入电话" clearable></el-input>
 				</el-form-item>
+				<el-form-item label="统计周期">
+					<el-select v-model="listQuery.powerType" clearable placeholder="请选择周期">
+						<el-option label="年" value="-1"></el-option>
+						<el-option label="月" value="0"></el-option>
+						<el-option label="日" value="1"></el-option>
+					</el-select>
+				</el-form-item>
 				<el-form-item label="日期" >
 					<el-date-picker ref="datePicker" :isTodayBefore="true"></el-date-picker>
 				</el-form-item>
@@ -41,11 +48,11 @@
 				<el-form-item>
 					<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="(getList(true))">查询</el-button>
 				</el-form-item>
-				<el-form-item>
+				<!-- <el-form-item>
 					<el-button v-if="permBtn.car_add" class="filter-item btnColor" type="primary" icon="el-icon-plus" @click="handleCreate">新增</el-button>
-				</el-form-item>
+				</el-form-item> -->
 				<el-form-item>
-					<el-button v-if="permBtn.car_export" class="filter-item" type="primary" icon="el-icon-download" @click="exportFormLists">导出</el-button>
+					<el-button v-if="!permBtn.car_export" class="filter-item" type="primary" icon="el-icon-download" @click="exportFormLists">导出</el-button>
 				</el-form-item>
 				<!--导入按钮以及弹框  start-->
 				<!-- <el-form-item>
@@ -63,15 +70,18 @@
 			<el-table-column align="center" label='住户名' prop="userName"></el-table-column>
 			<el-table-column align="center" label="住户编号" prop="phone"></el-table-column>
 		    <el-table-column align="center" label="小区" prop="community"></el-table-column>
-			<el-table-column align="center" label="用气量/L" prop="gasMeasure"></el-table-column>
+			<el-table-column align="center" label="用气量/L">
+				<template slot-scope="scope">
+					<div v-if="!scope.row.gasMeasure">--</div>
+				</template></el-table-column>
 			<el-table-column align="center" label="统计时间" prop="collectionTime"></el-table-column>
-			<el-table-column align="center" label="操作" width="150">
+			<!-- <el-table-column align="center" label="操作" width="150">
 				<template slot-scope="scope">
 					<el-button v-if="permBtn.group_check" class="btn check" size="small" @click="check(scope.$index, scope.row)" title="查看"></el-button>
 					<el-button v-if="permBtn.group_modify" class="btn update" size="small" @click="handleEdit(scope.$index, scope.row)" title="修改"></el-button>
 					<el-button v-if="permBtn.group_delete" class="btn delete" size="small" @click="handleDelete(scope.$index, scope.row)" title="删除"></el-button>
 				</template>
-			</el-table-column>
+			</el-table-column> -->
 		</el-table>
 		
 		<!-- 分页 -->

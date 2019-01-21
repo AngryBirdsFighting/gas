@@ -53,17 +53,24 @@
 		
 		<!-- 表格 -->
 		<el-table ref="multipleTable" :data="list" :height="height"  fit highlight-current-row v-loading="listLoading" element-loading-text="拼命加载中">
-			<el-table-column align="center" label='营业厅名称' prop="carNum"></el-table-column>
-			<el-table-column align="center" label="营业厅电话" prop="deptName"></el-table-column>
-		    <el-table-column align="center" label="联系人" prop="carBrand"></el-table-column>
-			<el-table-column align="center" label="地市" prop="carModel"></el-table-column>
-			<el-table-column align="center" label="区县" prop="powerType"></el-table-column>
-			<el-table-column align="center" label="地址" prop="powerType"></el-table-column>
-			<el-table-column align="center" label="备注" prop="powerType"></el-table-column>
-			<el-table-column align="center" label="操作" width="150">
+			<el-table-column align="center" label='住户名' prop="name" width="130"></el-table-column>
+			<el-table-column align="center" label="住户编号" prop="householdCode"></el-table-column>
+			<el-table-column align="center" label="电话" prop="phone" width="100"></el-table-column></el-table-column>
+		    <el-table-column align="center" label="小区" prop="villageName"></el-table-column>
+			<el-table-column align="center" label="身份证号" prop="idNumber"></el-table-column>
+			<el-table-column align="center" label="条形码" prop="barCode">--</el-table-column>
+			<el-table-column align="center" label="表类型" >
 				<template slot-scope="scope">
-                    <el-button v-if="!permBtn.group_modify" class="btn update" size="small" @click="handleEdit(scope.$index, scope.row)" title="修改"></el-button>
-					<el-button v-if="!permBtn.group_delete" class="btn delete" size="small" @click="handleDelete(scope.$index, scope.row)" title="删除"></el-button>
+					<div v-if="!scope.row.gasMeterType">--</div>
+				</template>
+			</el-table-column>
+			<el-table-column align="center" label="操作" width="250">
+				<template slot-scope="scope">
+					<el-button  class="fl" size="small" type="primary">关阀</el-button>
+					<el-button  class="fl" size="small" type="danger">开阀</el-button>
+					<el-button  class="btn check" size="small" @click="check(scope.$index, scope.row)" title="查看"></el-button>
+					<el-button  class="btn update" size="small" @click="handleEdit(scope.$index, scope.row)" title="修改"></el-button>
+					<el-button  class="btn delete" size="small" @click="handleDelete(scope.$index, scope.row)" title="删除"></el-button>
 				</template>
 			</el-table-column>
 		</el-table>
@@ -152,7 +159,7 @@
 				vm.listLoading = true;
 				//调用接口
 				let param = JSON.parse(JSON.stringify(vm.listQuery));
-		        vm.$instance.post("/proxy/bizmgr/car/findCarList", param).then(res =>{	
+		        vm.$instance.post("/proxy/household/queryList", param).then(res =>{	
 					vm.listLoading = false;
 		          	if(res.status == 200){
 		                vm.list = res.data.data;

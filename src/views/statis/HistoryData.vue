@@ -21,7 +21,7 @@
 				<el-form-item label="条形码">
 					<el-input v-model="listQuery.equImei" placeholder="请输入条形码" clearable></el-input>
 				</el-form-item>
-				<el-form-item label="上报时间" >
+				<el-form-item label="采集时间" >
 					<date-time-picker ref="datePicker" :isTodayBefore="true"></date-time-picker>
 				</el-form-item>
 				
@@ -50,18 +50,18 @@
 			<el-table-column align="center" label='住户名' prop="userName"></el-table-column>
 			<el-table-column align="center" label="电话" prop="phone"></el-table-column>
 		    <el-table-column align="center" label="小区" prop="community"></el-table-column>
-			<el-table-column align="center" label="条形码" prop="barCode"></el-table-column>
+			<el-table-column align="center" label="条形码" prop="barCode" width="250"></el-table-column>
 			<el-table-column align="center" label="采集时间" prop="collectionTime"></el-table-column>
 			<el-table-column align="center" label="计费方式" prop="billingType"></el-table-column>
 			<el-table-column align="center" label="昨日用气量/L" prop="yesterdayGasMeasure"></el-table-column>
 			<el-table-column align="center" label="累计用气量/L" prop="allGasMeasure"></el-table-column>
-			<el-table-column align="center" label="操作" width="150">
+			<!-- <el-table-column align="center" label="操作" width="150">
 				<template slot-scope="scope">
 					<el-button v-if="permBtn.group_check" class="btn check" size="small" @click="check(scope.$index, scope.row)" title="查看"></el-button>
 					<el-button v-if="permBtn.group_modify" class="btn update" size="small" @click="handleEdit(scope.$index, scope.row)" title="修改"></el-button>
 					<el-button v-if="permBtn.group_delete" class="btn delete" size="small" @click="handleDelete(scope.$index, scope.row)" title="删除"></el-button>
 				</template>
-			</el-table-column>
+			</el-table-column> -->
 		</el-table>
 		
 		<!-- 分页 -->

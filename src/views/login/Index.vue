@@ -38,11 +38,11 @@
 				<el-form-item prop="password">
 					<el-input  prefix-icon="icon-c-mima" name="password" v-model="loginForm.password" type="password"   autoComplete="off" placeholder="密码：admin123456" style="width: 100%;" clearable></el-input>
 				</el-form-item>
-				<el-form-item prop="identifyCode">
+				<!-- <el-form-item prop="identifyCode">
 				    <el-input  prefix-icon="icon-c-anquan" name="identifyCode" v-model="loginForm.identifyCode" @keyup.enter.native.prevent="handleLogin" style="width:145px;" placeholder="验证码" clearable></el-input>
 				    <img class="yz-img" :src= "loginForm.imgSrc" @click="changeCode" />
 				    <el-button class="code-btn" size="mini" @click.native.prevent="changeCode" round>换一组</el-button>
-				</el-form-item>
+				</el-form-item> -->
 				<el-form-item class="sub-btn">
 					<el-button type="primary" @click.native.prevent="handleLogin" :loading="logining">{{logining ? "登录中..." : "登 录"}}</el-button>
 				</el-form-item>
@@ -553,7 +553,7 @@
 	.login-container {
 		@include relative;
 		height: 100vh;
-		background: url('../../assets/img/login.jpg') no-repeat;
+		background: url('../../assets/img/login.png') no-repeat;
 		background-size: cover;
 		header {
 			@include height(100px);
@@ -617,7 +617,7 @@
 	        }
 	    }
 	    .login-form {
-			position: absolute;
+			// position: absolute;
 			right: 18%;
         	top: 25%;
 			.login-title {
@@ -626,7 +626,8 @@
 	        }
 	        .login-box {
 				width: 400px;
-				height: 425px;
+				// height: 425px;
+				margin: 10% auto;
 	            border-radius: 3px;
 	            @include boxShadow(0, 0, 5px, 3px, rgba(212, 212, 215, 0.8));
 	            background: #fff;

@@ -32,8 +32,8 @@
 		
 		<!-- 表格 -->
 		<el-table ref="multipleTable" :data="list" :height="height"  fit highlight-current-row v-loading="listLoading" element-loading-text="拼命加载中">
-			<el-table-column align="center" label='维护人' prop="carNum"></el-table-column>
-			<el-table-column align="center" label="所属营业厅" prop="deptName"></el-table-column>
+			<el-table-column align="center" label='维护人' prop="name"></el-table-column>
+			<el-table-column align="center" label="所属营业厅" prop="villageName"></el-table-column>
 			<el-table-column align="center" label="操作" width="150">
 				<template slot-scope="scope">
                     <el-button v-if="!permBtn.group_modify" class="btn update" size="small" @click="handleEdit(scope.$index, scope.row)" title="修改"></el-button>
@@ -119,7 +119,7 @@
 				vm.listLoading = true;
 				//调用接口
 				let param = JSON.parse(JSON.stringify(vm.listQuery));
-		        vm.$instance.post("/proxy/bizmgr/car/findCarList", param).then(res =>{	
+		        vm.$instance.post("/proxy/info/personnel", param).then(res =>{	
 					vm.listLoading = false;
 		          	if(res.status == 200){
 		                vm.list = res.data.data;
