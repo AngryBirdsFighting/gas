@@ -1,8 +1,8 @@
 /*
  * @Author: qiaozp 
  * @Date: 2019-01-16 13:50:55 
- * @Last Modified by: qiaozp
- * @Last Modified time: 2019-01-16 14:33:54
+ * @Last Modified by: Wang Chao
+ * @Last Modified time: 2019-01-21 10:45:23
  * @Description:  设备维护人
  */
 
@@ -17,7 +17,7 @@
                 <el-form-item label="所属营业厅">
 					<el-select v-model="listQuery.powerType" clearable placeholder="请选择营业厅">
 						<el-option label="请选择" value=""></el-option>
-						<el-option label="营业厅1" value="1"></el-option>
+						<el-option label="营业厅1" value="1"></el-option>  
 						<el-option label="营业厅2" value="2"></el-option>
 					</el-select>					 
 				</el-form-item>
@@ -44,6 +44,39 @@
 		
 		<!-- 分页 -->
 		<pagination ref="page" :total="total" @reLoadData="paginationChange"></pagination>
+
+		
+		<!--新增弹框-->
+		<el-dialog title="新增营业厅" :visible.sync="addFormVisible" top="10%" width="350px" lock-scroll class="dialog_input"
+			:close-on-click-modal="false" :close-on-press-escape="false">
+			<el-form class="small-space" ref="addDialogForm"  :rules="rulesAdd" :model="addEquPerson" label-position="left" label-width="120px"
+					v-loading="addLoad" element-loading-text="拼命加载中">
+				<el-row>
+					<el-col :span="24">
+						<div class="grid-content bg-purple">
+							<el-form-item label="所属营业厅" prop="point">
+								<el-select v-model="addEquPerson.point" filterable clearable  placeholder="请选择营业厅">	
+									<el-option 	:value="'空'">空</el-option>
+									<!-- <el-option
+									v-for="item in dictionaries.car_brands"
+									:value="item.dictCode"
+									:label="item.dictName"
+									:key="item.dictCode">
+									</el-option> -->
+								</el-select>	
+							</el-form-item>						
+							<el-form-item label="维护人" prop="equPerson">
+									<el-input v-model="addEquPerson.equPerson" :maxlength="9" placeholder="维护人" clearable></el-input>
+							   </el-form-item>		
+						</div>	   
+					</el-col>
+				</el-row>
+				<el-form-item class="formButton">
+					<el-button @click="addFormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="handleCreateSubmit('addDialogForm')" class="btnColor">确 定</el-button>
+				</el-form-item>
+			</el-form>
+		</el-dialog>
 	</div>
 </template>
 
@@ -72,6 +105,7 @@
 					equment_Rule: false,
 					driver_Rule: false
 				},
+				
 				list:[], //表格list
 				total: 0,
 				listLoading: true,
@@ -81,6 +115,25 @@
 					iDisplayLength: 10,
 					iDisplayStart: 0,
 					name: "",
+				},
+				addLoad: false,//新增加载状态
+				addFormVisible:false,
+				//唯一性验证状态记录
+				isValidate:{
+					isOk: false   //点击确定第一时间将此变量设置为true
+				},
+				addEquPerson:{
+					equPerson:"",
+					point:""
+				},
+				//新增编辑数据校验
+				rulesAdd: {
+					equPerson: [
+						{ required: true, message: '请输入维护人', trigger: 'change' }
+					],
+					point: [
+						{ required: true, message: '请选择营业厅', trigger: 'change' }
+					]
 				},
 			}
 		},
@@ -140,6 +193,23 @@
 				this.listQuery.iDisplayLength = pageData.iDisplayLength;
 				this.getList();
 			},	
+			//打开新增弹窗
+			handleCreate(){
+				this.addFormVisible = true;
+			},
+			//新增确定
+			handleCreateSubmit(formName) {								
+				this.isValidate.isOk = true;
+				validate.isValidate(this, formName, (formData)=>{
+					if(formData.validates){
+						this.createSubmit();
+					}
+					this.isValidate.isOk = false;
+				});
+			},	
+			createSubmit(){
+				alert("1")
+			}	
 		}
 		
 	}
