@@ -13,13 +13,13 @@
 		<div class="filter-container">
 			<el-form :inline="true" :model="listQuery" class="demo-form-inline">
 				<el-form-item label="住户姓名">
-					<el-input v-model="listQuery.equImei" placeholder="请输入住户姓名" clearable></el-input>
+					<el-input v-model="listQuery.name" placeholder="请输入住户姓名" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="住户编号">
-					<el-input v-model="listQuery.equImei" placeholder="请输入住户编号" clearable></el-input>
+					<el-input v-model="listQuery.householdCode" placeholder="请输入住户编号" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="小区">
-					<el-select v-model="listQuery.powerType" clearable placeholder="请选择小区">
+					<el-select v-model="listQuery.villageName" clearable placeholder="请选择小区">
 						<el-option label="请选择" value=""></el-option>
 						<!-- <el-option
 						v-for="item in dictionaries.fuel_type"
@@ -30,7 +30,7 @@
 					</el-select>					 
 				</el-form-item>
 				<el-form-item label="告警类型">
-					<el-select v-model="listQuery.powerType" clearable placeholder="请选择告警类型">
+					<el-select v-model="listQuery.alarmType" clearable placeholder="请选择告警类型">
 						<el-option label="请选择" value=""></el-option>
 						<!-- <el-option
 						v-for="item in dictionaries.fuel_type"
@@ -41,7 +41,7 @@
 					</el-select>					 
 				</el-form-item>
 				<el-form-item label="告警时间" >
-					<date-time-picker ref="datePicker" :isTodayBefore="true"></date-time-picker>
+					<date-time-picker v-model="listQuery.alarmTime" ref="datePicker" :isTodayBefore="true"></date-time-picker>
 				</el-form-item>
 				<el-form-item>
 					<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="(getList(true))">查询</el-button>
@@ -51,21 +51,63 @@
 		
 		<!-- 表格 -->
 		<el-table ref="multipleTable" :data="list" :height="height"  fit highlight-current-row v-loading="listLoading" element-loading-text="拼命加载中">
-			<el-table-column align="center" label='住户名' prop="carNum"></el-table-column>
-			<el-table-column align="center" label="住户编号" prop="deptName"></el-table-column>
-		    <el-table-column align="center" label="小区" prop="carBrand"></el-table-column>
-			<el-table-column align="center" label="告警类型" prop="carModel"></el-table-column>
+			<el-table-column align="center" label='住户名' prop="name"></el-table-column>
+			<el-table-column align="center" label="住户编号" prop="householdCode"></el-table-column>
+		    <el-table-column align="center" label="小区" prop="villageName"></el-table-column>
+			<el-table-column align="center" label="告警类型" prop="alarmType"></el-table-column>
 			<el-table-column align="center" label="告警时间" prop="powerType"></el-table-column>
 			<el-table-column align="center" label="操作" width="150">
 				<template slot-scope="scope">
-					<el-button v-if="!permBtn.group_check" class="btn check" size="small" @click="check(scope.$index, scope.row)" title="派发"></el-button>
-					<el-button v-if="!permBtn.group_modify" class="btn update" size="small" @click="handleEdit(scope.$index, scope.row)" title="忽略"></el-button>
+					<el-button v-if="!permBtn.group_check" class="btn order" size="small" @click="assign(scope.$index, scope.row)" title="派发"></el-button>
+					<el-button v-if="!permBtn.group_modify" class="btn gnore" size="small" @click="ignore(scope.$index, scope.row)" title="忽略"></el-button>
 				</template>
 			</el-table-column>
 		</el-table>
 		
 		<!-- 分页 -->
 		<pagination ref="page" :total="total" @reLoadData="paginationChange"></pagination>
+
+		<!-- 工单派发弹框 -->
+		<el-dialog title="工单派发" :close-on-click-modal="false" :close-on-press-escape="false" :visible.sync="orderFormVisible" width="730px" height="450px" top="10%" lock-scroll class="boxres">
+			<div v-loading="personnelTableLoad" element-loading-text="拼命加载中">
+				<div>
+					<el-form :inline="true" :model="workOrderQuery" class="demo-form-inline">
+						<el-form-item label="姓名：">
+							<el-input v-model="workOrderQuery.personnel" size="227px" placeholder="请输入姓名"></el-input>
+						</el-form-item>
+						<el-form-item label="营业厅">
+							<el-select v-model="workOrderQuery.point" clearable placeholder="请选择营业厅">
+								<el-option label="请选择" value=""></el-option>
+								<!-- <el-option
+								v-for="item in dictionaries.fuel_type"
+								:key="item.dictCode"
+								:label="item.dictName"
+								:value="item.dictCode">
+								</el-option> -->
+							</el-select>					 
+						</el-form-item>
+						<el-form-item>
+							<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="getPersonnelData(true)">查询</el-button>
+						</el-form-item>
+					</el-form>
+					
+				</div>
+				<div style="width:100%; height:250px; margin:0 auto;">
+					<el-table class="driver-table" ref="personnelTable" height="250" :data="personnelData" style = "width:100%"  highlight-current-row 
+							v-loading="personnelTableLoad" element-loading-text="拼命加载中">
+						<el-table-column align="center" label='维修人' prop="driverName"></el-table-column>
+						<el-table-column align="center" label="所属营业厅" prop="deptName"></el-table-column>
+			    	</el-table>
+				</div>
+				<!-- 分页 -->
+				<pagination ref="pagePersonnel" :total="personnelTotal" @reLoadData="personnelPaginationChange"></pagination>
+
+			    <div class="formButton">
+					<el-button @click="closePersonnelTable">取 消</el-button>
+					<el-button type="primary" @click.native.prevent="bindPersonnelSubmit()" class="btnColor">保 存</el-button>
+				</div>
+			</div>
+		</el-dialog>
 	</div>
 </template>
 
@@ -85,32 +127,35 @@
 		data() {
 			const vm =this;
 			return {
-				//按钮的权限 查询query 新增add   true 显示  false 隐藏
-				permBtn:{
-	                car_add: false,
-					car_delete: false, 
-					car_Modify: false, 
-					car_check: false, 
-					car_import: false,
-					car_export: false,
-					equment_Rule: false,
-					driver_Rule: false
+				permBtn:{//按钮的权限 查询query 新增add   true 显示  false 隐藏
+	                
 				},
 				list:[], //表格list
 				total: 0,
-				listLoading: true,
+				personnelTotal: 0,
+				listLoading: false,
+				persoonelTotal: false,
+				personnelTableLoad: false,
 				height: 540,
-				//列表查询参数
+				//告警列表查询参数
 				listQuery: {
 					iDisplayLength: 10,
 					iDisplayStart: 0,
-					powerType: "",
-					useType: "",
-					driverName: "",
-					deptId: "",
-					carNum: "",
-					equImei: "",//设备imei
+					name: "",
+					householdCode: "",
+					villageName: "",
+					alarmType: "",
+					alarmTime: ""
 				},
+				//工单派发查询参数
+				workOrderQuery: {
+					iDisplayLength: 10,
+					iDisplayStart: 0,
+					personnel: "",
+					point: ""
+				},
+				personnelData: [], //维护人列表数据
+				orderFormVisible: false, //分派工单弹框
 			}
 		},
 		mounted() {
@@ -138,7 +183,7 @@
 			//获取列表数据
 			//isBackHome 是否返回首页
 			getList(isBackHome = false) {
-				var vm = this;
+				let vm = this;
 				if (isBackHome) {
 					if (vm.listQuery.iDisplayStart != 0) {
 						vm.$refs.page.backFirstPage();
@@ -148,7 +193,7 @@
 				vm.listLoading = true;
 				//调用接口
 				let param = JSON.parse(JSON.stringify(vm.listQuery));
-		        vm.$instance.post("/proxy/bizmgr/car/findCarList", param).then(res =>{	
+		        vm.$instance.post("/proxy/household/queryList", param).then(res =>{	
 					vm.listLoading = false;
 		          	if(res.status == 200){
 		                vm.list = res.data.data;
@@ -169,98 +214,61 @@
 				this.listQuery.iDisplayLength = pageData.iDisplayLength;
 				this.getList();
 			},	
+
+			// 派发 
+			assign(index, row) {
+				let vm = this
+				vm.orderFormVisible = true
+			},
+
+			//忽略
+			ignore(index, row) {
+				let vm = this
+				//确定忽略
+				this.$confirm('确定忽略此告警消息么？', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					//调用接口
+					// vm.$instance.post("/proxy/bizmgr/car/deleteCar", param).then(res =>{
+					// 	if(res.status == 200){
+					// 		if (res.data.success) {
+					// 			Message.success({message: '删除成功！'});
+					// 			vm.$refs.page.deleteItemReLoadList();
+					// 		} else {
+					// 			Message.error({message:res.data.errorMsg});
+					// 		}
+					// 	}else{
+					// 		Message.error({message:"调用接口失败"});
+					// 	}
+					// }).catch(error => {});
+				}).catch(() => {
+					Message.info({message: '已取消删除'});          
+				});
+			},
+
+			getPersonnelData() {
+
+			},
+
+			personnelPaginationChange() {
+
+			},
+
+			bindPersonnelSubmit() {
+
+			},
+
+			closePersonnelTable() {
+				let vm = this
+				vm.orderFormVisible = false
+			},
 		}
 		
 	}
 	
 </script>
 <style rel="stylesheet/scss" scope lang="scss">
-	.driver-table tbody tr:nth-child(odd){
-		background: #fff;
-	}
-	.device-imei>div>div {
-		cursor: pointer;
-		width: 160px;
-		height: 30px;
-		line-height: 30px;
-		padding: 0 10px;
-		color: #c0c4cc;
-		border: 1px solid #dcdfe6;
-		border-radius: 4px;
-	}
 	
-	.box .el-dialog {
-		width: 25%;
-	}
-	
-	.el-tabs__nav-wrap::after{
-		background: none;
-	}
-	
-	.el-tabs__item{
-		border: 1px solid #e9e9e9;
-		text-align: center;
-		border-radius: 4px;
-		-webkit-border-radius: 4px;
-    	-moz-border-radius: 4px;
-    	padding: 0 30px !important;
-	}
-	.el-tabs__item.is-active{
-		background: #1e4d78;
-		border: 1px solid #1e4d78;
-		color: #fff;
-	}
-	.el-tabs__active-bar{
-		background: none;
-	}
-	.box form{
-		padding-left: 50px;
-	}
-	.dialogDeptTree {
-		border: 1px solid #ddd;
-		max-height: 150px;
-		overflow-y: auto; 
-	}
-	.text-btn{
-		cursor: pointer;
-		color: #67d3e0;
-	}
-	.equimei-dialog{
-		.el-form-item__content{
-			width: 227px!important;
-			.el-select, .el-input{
-				width: 100%;
-			}
-		}
-		.equimei-text{
-			color: #969696;
-			font-size: 12px;
-			text-align: center;
-		}		
-	}
-	.confirm{
-		& span, & i{
-			display: inline-block;
-			vertical-align: middle;
-		}
-		& .confirm-top{
-			text-align: center;
-			font-size: 20px;
-		    & span, & i{
-				display: inline-block;
-				vertical-align: middle;
-			}
-			& .confirm-text{				
-                font-weight: 700;				
-			}
-		
-		}
-		& .confirm-bottom{
-			margin-top: 20px;
-			text-align: center;
-			& span{
-				width: 35%;
-			}
-		}	
-	}
 </style>

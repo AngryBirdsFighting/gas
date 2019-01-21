@@ -49,7 +49,7 @@ html {
 }
 .el-table{
     border-left: 1px solid #ebeef5;
-	border-right: 1px solid #ebeef5;
+	border-right: 1px solid #ebeef5 !important;
 }
 .el-table .cell{
     padding: 0 !important;
@@ -709,6 +709,7 @@ li.el-menu-item.is-active{
 
 
 .formButton{
-  padding: 20px 0px;
+  padding: 20px 0px 0 0;
   text-align:right;
 }
+

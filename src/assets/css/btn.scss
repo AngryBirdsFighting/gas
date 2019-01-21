@@ -133,6 +133,12 @@ $panGreen: #30B08F;
     margin-left: 5px;
 }
 
+.el-dialog__headerbtn .el-dialog__close{
+  color: #fff !important;
+}
+.el-dialog__headerbtn:hover .el-dialog__close{
+  color:#e8281f !important;
+}
 .check{background: url(../img/check.png) no-repeat center center !important;}
 .resources{background: url(../img/resources.png) no-repeat center center !important;}
 .update{background: url(../img/update.png) no-repeat center center !important;}
@@ -140,3 +146,5 @@ $panGreen: #30B08F;
 .delete{background: url(../img/delete.png) no-repeat center center !important;}
 .role{background: url(../img/role.png) no-repeat center center !important;}
 .rules{background: url(../img/rules.png) no-repeat center center !important;}
+.order{background: url(../img/work-order.png) no-repeat center center !important;}
+.gnore{background: url(../img/gnore.png) no-repeat center center !important;}
