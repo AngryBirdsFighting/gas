@@ -116,7 +116,9 @@ tbody tr:nth-child(odd){
 .el-date-editor .el-range-input{
     width: 100px;
 }
-
+.width150 .el-input{
+    width: 150px !important;
+}
 //车辆数选择框清除按钮
 .closeI{
     position: absolute;

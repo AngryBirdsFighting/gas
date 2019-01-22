@@ -32,28 +32,15 @@
 					<el-input v-model="listQuery.phone" placeholder="请输入电话" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="统计周期">
-					<el-select v-model="listQuery.time" clearable placeholder="请选择周期">
-						<el-option label="年" value="-1"></el-option>
-						<el-option label="月" value="0"></el-option>
+					<el-select v-model="listQuery.time" placeholder="请选择周期" @change="changeTime">
 						<el-option label="日" value="1"></el-option>
+						<el-option label="月" value="0"></el-option>
+						<el-option label="年" value="-1"></el-option>
 					</el-select>
 				</el-form-item>
-				<!-- <el-form-item label="日期" >
-					<el-date-picker :v-model="listQuery.date" ref="datePicker" :isTodayBefore="true"></el-date-picker>
-				</el-form-item> -->
 				
-				<el-form-item label="日期" >
-					<el-date-picker :v-model="listQuery.date" type="date" value-format="yyyy-MM-dd"></el-date-picker>
-					<!-- <el-date-picker
-						v-model="listQuery.date"
-						type="month"
-						placeholder="选择月">
-					</el-date-picker> -->
-					<!-- <el-date-picker
-						v-model="listQuery.date"
-						:type="dateType"
-						placeholder="选择时间">
-					</el-date-picker> -->
+				<el-form-item label="日期" class="width150">
+					<el-date-picker v-model="listQuery.date" :type="dateType" placeholder="请选择时间"></el-date-picker>
 				</el-form-item>
 				
 				<el-form-item>
@@ -88,12 +75,10 @@
 	import { validate } from 'utils/validate';
 	import { utils } from 'src/utils';
 	import Pagination from '../../components/Pagination';
-	// import DateTimePicker from '../../components/DateTimePicker';//日期组件
 
 	export default {
 		components: {
 			'pagination': Pagination,
-			// 'date-time-picker': DateTimePicker ,//日期组件
 		 },
 		data() {
 			return {
@@ -114,9 +99,9 @@
 					name: "",
 					phone: "",
 					time: "1",
-					date: 0,//设备imei
+					date: "",	
 				},
-				dateType: "month"
+				dateType: "date",
 			}
 		},
 		mounted() {
@@ -129,7 +114,7 @@
 				});
 			})
 		},
-		//实例销毁之间调用。在这一步，实例仍然完全可用。   时间定时器
+		//实例销毁之间调用。在这一步，实例仍然完全可用
 		beforeDestroy(){
 			
 		},
@@ -154,7 +139,7 @@
 				vm.listLoading = true;
 				//调用接口
 				let param = JSON.parse(JSON.stringify(vm.listQuery));
-		        vm.$instance.get("/proxy/statis/findHistoryData", {params:param}).then(res =>{	
+		        vm.$instance.get("/proxy/statis/findHistoryData", {params: param}).then( res => {	
 					vm.listLoading = false;
 		          	if(res.status == 200){
 		            	vm.list = res.data.data;
@@ -168,17 +153,39 @@
 			},
 			//获取字典
 			getDictionaries() {
-				var vm = this;
-				let arr = ["fuel_type","car_plate_color","car_use","car_brands","car_color"];
-				utils.batchDictsByCode(arr, data => {
-					vm.dictionaries = data;
-				})
+				// var vm = this;
+				// let arr = ["fuel_type","car_plate_color","car_use","car_brands","car_color"];
+				// utils.batchDictsByCode(arr, data => {
+				// 	vm.dictionaries = data;
+				// })
 			},
 
+			//改变分页
 			paginationChange(pageData) {
 				this.listQuery.iDisplayStart = pageData.iDisplayStart;
 				this.listQuery.iDisplayLength = pageData.iDisplayLength;
 				this.getList();
+			},
+
+			//改变统计周期，切换时间组件
+			changeTime(value) {
+				switch (value) {
+					case "1":
+						this.dateType = "date"
+						this.listQuery.date = ""
+						break;
+					case "0":
+						this.dateType = "month"
+						this.listQuery.date = ""
+						break;
+					case "-1":
+						this.dateType = "year"
+						this.listQuery.date = ""
+						break;
+					default:
+						this.listQuery.date = ""
+						break;
+				}
 			}
 		}
 	}

@@ -18,8 +18,8 @@
 						<el-option label="长安壹号" value="1"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="日期" >
-					<el-date-picker v-model="listQuery.date" ref="datePicker" :isTodayBefore="true"></el-date-picker>
+				<el-form-item label="日期" class="width150" >
+					<el-date-picker v-model="listQuery.date" type="date" placeholder="请选择日期"></el-date-picker>
 				</el-form-item>
 				
 				<el-form-item>
@@ -40,12 +40,11 @@
 	import { Message } from 'element-ui';
 	import { validate } from 'utils/validate';
 	import { utils } from 'src/utils';
-	import DateTimePicker from '../../components/DateTimePicker';//日期组件
 	import initEcharts  from 'src/utils/initEchart';
 
 	export default {
 		components: {
-			'date-time-picker': DateTimePicker ,//日期组件
+			
 		 },
 		data() {
 			return {
