@@ -55,7 +55,7 @@
 			<el-table-column align="center" label="住户编号" prop="householdCode"></el-table-column>
 		    <el-table-column align="center" label="小区" prop="villageName"></el-table-column>
 			<el-table-column align="center" label="告警类型" prop="alarmType"></el-table-column>
-			<el-table-column align="center" label="告警时间" prop="powerType"></el-table-column>
+			<el-table-column align="center" label="告警时间" prop="alarmTime"></el-table-column>
 			<el-table-column align="center" label="操作" width="150">
 				<template slot-scope="scope">
 					<el-button v-if="!permBtn.group_check" class="btn order" size="small" @click="assign(scope.$index, scope.row)" title="派发工单"></el-button>
@@ -193,7 +193,7 @@
 				vm.listLoading = true;
 				//调用接口
 				let param = JSON.parse(JSON.stringify(vm.listQuery));
-		        vm.$instance.post("/proxy/household/queryList", param).then(res =>{	
+		        vm.$instance.post("/proxy/alarm/queryList", param).then(res =>{	
 					vm.listLoading = false;
 		          	if(res.status == 200){
 		                vm.list = res.data.data;
