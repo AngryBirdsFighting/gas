@@ -122,6 +122,11 @@ tbody tr:nth-child(odd){
 .barCode .el-input{
     width: 240px !important;
 }
+
+.dialog .el-input{
+    padding: 0 !important;
+    width: 80%
+}
 //车辆数选择框清除按钮
 .closeI{
     position: absolute;

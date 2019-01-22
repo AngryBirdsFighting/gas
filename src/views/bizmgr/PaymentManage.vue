@@ -63,8 +63,8 @@
 		<pagination ref="page" :total="total" @reLoadData="paginationChange"></pagination>
 		
 		<!--售气弹窗-->
-		<el-dialog title="售气" :close-on-click-modal="false" :close-on-press-escape="false" :visible.sync="salesGasFormVisible" top="10%" width="488px"  height="280px" lock-scroll class="boxres">
-			<el-form class="small-space sales-gas" :model="saleGasQuery" ref="bindEquImeiForm"  label-position="left" label-width="140px" element-loading-text="拼命加载中">
+		<el-dialog title="售气" :close-on-click-modal="false" :close-on-press-escape="false" :visible.sync="salesGasFormVisible" top="10%" width="500px"  height="280px" lock-scroll class="boxres">
+			<el-form class="small-space dialog" :model="saleGasQuery" ref="bindEquImeiForm" label-position="left" label-width="140px" element-loading-text="拼命加载中">
 				<el-form-item label="购气金额：">
 				    <el-input v-model="saleGasQuery.lumpSum" placeholder="购气金额"></el-input>
 			   	</el-form-item>
@@ -217,8 +217,5 @@
 	}
 </script>
 <style rel="stylesheet/scss" scope lang="scss">
-	.sales-gas .el-input{
-		padding: 0;
-		width: 80%
-	}
+	
 </style>
