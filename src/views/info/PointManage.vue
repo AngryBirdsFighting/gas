@@ -74,7 +74,7 @@
       top="10%"
       width="650px"
       lock-scroll
-      class="dialog_input"
+      class="dialog"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
@@ -100,7 +100,7 @@
                 ></el-input>
               </el-form-item>
               <el-form-item label="电话" prop="phone">
-                <el-input v-model="addEquPerson.phone" :maxlength="9" placeholder="维护人" clearable></el-input>
+                <el-input v-model="addEquPerson.phone" :maxlength="11" placeholder="电话" clearable></el-input>
               </el-form-item>
               <el-form-item label="联系人" prop="pointContact">
                 <el-input
@@ -172,7 +172,7 @@
       top="10%"
       width="650px"
       lock-scroll
-      class="dialog_input"
+      class="dialog"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
