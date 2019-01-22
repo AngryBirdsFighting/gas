@@ -165,6 +165,104 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+     <!--编辑弹框-->
+    <el-dialog
+      title="编辑营业厅"
+      :visible.sync="editFormVisible"
+      top="10%"
+      width="650px"
+      lock-scroll
+      class="dialog_input"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <el-form
+        class="small-space"
+        ref="addDialogForm"
+        :rules="rulesAdd"
+        :model="editEquPerson"
+        label-position="left"
+        label-width="120px"
+        v-loading="addLoad"
+        element-loading-text="拼命加载中"
+      >
+        <el-row>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="名称" prop="pointName">
+                <el-input
+                  v-model="addEquPerson.equPerson"
+                  :maxlength="9"
+                  placeholder="维护人"
+                  clearable
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="电话" prop="phone">
+                <el-input v-model="addEquPerson.phone" :maxlength="9" placeholder="维护人" clearable></el-input>
+              </el-form-item>
+              <el-form-item label="联系人" prop="pointContact">
+                <el-input
+                  v-model="addEquPerson.pointContact"
+                  :maxlength="9"
+                  placeholder="维护人"
+                  clearable
+                ></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple">
+              <el-form-item label="地市" prop="city">
+                <el-select v-model="addEquPerson.city" filterable clearable placeholder="请选择地市">
+                  <el-option :value="'空'">空</el-option>
+                  <!-- <el-option
+									v-for="item in dictionaries.car_brands"
+									:value="item.dictCode"
+									:label="item.dictName"
+									:key="item.dictCode">
+                  </el-option>-->
+                </el-select>
+              </el-form-item>
+              <el-form-item label="区县" prop="county">
+                <el-select v-model="addEquPerson.county" filterable clearable placeholder="请选择区县">
+                  <el-option :value="'空'">空</el-option>
+                  <!-- <el-option
+									v-for="item in dictionaries.car_brands"
+									:value="item.dictCode"
+									:label="item.dictName"
+									:key="item.dictCode">
+                  </el-option>-->
+                </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-form-item label="地址" prop="address">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4}"
+            placeholder="请输入内容"
+            v-model="addEquPerson.address"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4}"
+            placeholder="请输入内容"
+            v-model="addEquPerson.remarks"
+          ></el-input>
+        </el-form-item>
+        <el-form-item class="formButton">
+          <el-button @click="editFormVisible = false">取 消</el-button>
+          <el-button
+            type="primary"
+            @click="handleCreateSubmit('addDialogForm')"
+            class="btnColor"
+          >确 定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -205,6 +303,7 @@ export default {
       },
       addLoad: false, //新增加载状态
       addFormVisible: false,
+      editFormVisible: false,
       //唯一性验证状态记录
       isValidate: {
         isOk: false //点击确定第一时间将此变量设置为true
@@ -214,6 +313,15 @@ export default {
         point: ""
       },
       addEquPerson: {
+        equPerson: "",
+        pointContact: "",
+        phone: "",
+        city: "",
+        county: "",
+        address: "",
+        remarks: ""
+      },
+      editEquPerson: {
         equPerson: "",
         pointContact: "",
         phone: "",
@@ -298,6 +406,10 @@ export default {
     //打开新增弹窗
     handleCreate() {
       this.addFormVisible = true;
+    },
+    //打开编辑弹窗
+    handleEdit() {
+      this.editFormVisible = true;
     },
     //新增确定
     handleCreateSubmit(formName) {
