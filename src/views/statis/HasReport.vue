@@ -14,12 +14,12 @@
 			<el-form :inline="true" :model="listQuery" class="demo-form-inline">
 				<el-form-item label="小区">
 					<el-select v-model="listQuery.villageName" clearable placeholder="请选择小区">
-						<el-option 
+						<!-- <el-option 
 						v-for="item in alarmList"
 						:key="item.dictCode"
 						:label="item.dictName"
 						:value="item.dictCode">
-						</el-option>
+						</el-option> -->
 					</el-select>
 				</el-form-item>
 				<el-form-item label="住户编号">
@@ -38,16 +38,30 @@
 						<el-option label="日" value="1"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="日期" >
+				<!-- <el-form-item label="日期" >
 					<el-date-picker :v-model="listQuery.date" ref="datePicker" :isTodayBefore="true"></el-date-picker>
+				</el-form-item> -->
+				
+				<el-form-item label="日期" >
+					<el-date-picker :v-model="listQuery.date" type="date" value-format="yyyy-MM-dd"></el-date-picker>
+					<!-- <el-date-picker
+						v-model="listQuery.date"
+						type="month"
+						placeholder="选择月">
+					</el-date-picker> -->
+					<!-- <el-date-picker
+						v-model="listQuery.date"
+						:type="dateType"
+						placeholder="选择时间">
+					</el-date-picker> -->
 				</el-form-item>
 				
 				<el-form-item>
 					<el-button class="filter-item btnColor" type="primary" icon="el-icon-search" @click="(getList(true))">查询</el-button>
 				</el-form-item>
-				<el-form-item>
+				<!-- <el-form-item>
 					<el-button v-if="!permBtn.car_export" class="filter-item" type="primary" icon="el-icon-download" @click="exportFormLists">导出</el-button>
-				</el-form-item>
+				</el-form-item> -->
 			</el-form>
 		</div>
 		
@@ -74,12 +88,12 @@
 	import { validate } from 'utils/validate';
 	import { utils } from 'src/utils';
 	import Pagination from '../../components/Pagination';
-	import DateTimePicker from '../../components/DateTimePicker';//日期组件
+	// import DateTimePicker from '../../components/DateTimePicker';//日期组件
 
 	export default {
 		components: {
 			'pagination': Pagination,
-			'date-time-picker': DateTimePicker ,//日期组件
+			// 'date-time-picker': DateTimePicker ,//日期组件
 		 },
 		data() {
 			return {
@@ -100,8 +114,9 @@
 					name: "",
 					phone: "",
 					time: "1",
-					date: "",//设备imei
+					date: 0,//设备imei
 				},
+				dateType: "month"
 			}
 		},
 		mounted() {
@@ -159,6 +174,12 @@
 					vm.dictionaries = data;
 				})
 			},
+
+			paginationChange(pageData) {
+				this.listQuery.iDisplayStart = pageData.iDisplayStart;
+				this.listQuery.iDisplayLength = pageData.iDisplayLength;
+				this.getList();
+			}
 		}
 	}
 	

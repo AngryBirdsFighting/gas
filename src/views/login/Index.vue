@@ -267,7 +267,6 @@
 					if(formData.validates){
 						formData.param.flags = true;
 						vm.logining = true;
-						debugger
 						if(formData.param.account != "admin" || formData.param.password != "admin123456"){
 							Message.error("账号或密码错误");
 							vm.loginForm.identifyCode = "";
