@@ -13,16 +13,16 @@
 		<div class="filter-container">
 			<el-form :inline="true" :model="listQuery" class="demo-form-inline">
 				<el-form-item label="条形码">
-					<el-input v-model="listQuery.carNum" placeholder="请输入条形码" clearable></el-input>
+					<el-input v-model="listQuery.barCode" placeholder="请输入条形码" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="住户姓名">
-					<el-input v-model="listQuery.equImei" placeholder="请输入住户姓名" clearable></el-input>
+					<el-input v-model="listQuery.name" placeholder="请输入住户姓名" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="住户电话">
-					<el-input v-model="listQuery.equImei" placeholder="请输入住户电话" clearable></el-input>
+					<el-input v-model="listQuery.phone" placeholder="请输入住户电话" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="小区">
-					<el-select v-model="listQuery.powerType" clearable placeholder="请选择小区">
+					<el-select v-model="listQuery.villageName" clearable placeholder="请选择小区">
 						<el-option label="请选择" value=""></el-option>
 						<!-- <el-option
 						v-for="item in dictionaries.fuel_type"
@@ -115,7 +115,10 @@
 				listQuery: {
 					iDisplayLength: 10,
 					iDisplayStart: 0,
+					barCode: "",
 					name: "",
+					phone: "",
+					villageName: ""
 				},
 				//导入模板的参数
 				importVisible:{

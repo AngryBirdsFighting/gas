@@ -42,7 +42,7 @@ html {
 }
 .el-date-editor .el-range-separator{
     width: 24px;
-    line-height: 24px;
+    line-height: 24px !important;
 }
 .el-date-editor .el-range-input{
     width: 120px;

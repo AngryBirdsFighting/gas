@@ -13,16 +13,16 @@
 		<div class="filter-container">
 			<el-form :inline="true" :model="listQuery" class="demo-form-inline">
 				<el-form-item label="条形码">
-					<el-input v-model="listQuery.carNum" placeholder="请输入车牌号" clearable></el-input>
+					<el-input v-model="listQuery.barCode" placeholder="请输入条形码" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="住户姓名">
-					<el-input v-model="listQuery.name" placeholder="请输入设备IMEI" clearable></el-input>
+					<el-input v-model="listQuery.name" placeholder="请输入住户姓名" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="住户电话">
-					<el-input v-model="listQuery.phone" placeholder="请输入设备IMEI" clearable></el-input>
+					<el-input v-model="listQuery.phone" placeholder="请输入住户电话" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="小区">
-					<el-select v-model="listQuery.villageName" clearable placeholder="请选择燃油类型">
+					<el-select v-model="listQuery.villageName" clearable placeholder="请选择小区">
 						<el-option label="请选择" value=""></el-option>
 						<!-- <el-option
 							v-for="item in dictionaries.fuel_type"
@@ -41,12 +41,16 @@
 		
 		<!-- 表格 -->
 		<el-table ref="multipleTable" :data="list" :height="height" fit highlight-current-row v-loading="listLoading" element-loading-text="拼命加载中">
-			<el-table-column align="center" label='住户名' prop="carNum"></el-table-column>
-			<el-table-column align="center" label="住户编号" prop="deptName"></el-table-column>
-			<el-table-column align="center" label="电话" prop="carColor"></el-table-column>
-		    <el-table-column align="center" label="小区" prop="carBrand"></el-table-column>
-			<el-table-column align="center" label="条形码" prop="carModel"></el-table-column>
-			<el-table-column align="center" label="表类型" prop="powerType"></el-table-column>
+			<el-table-column align="center" label='住户名' prop="name"></el-table-column>
+			<el-table-column align="center" label="住户编号" prop="householdCode"></el-table-column>
+			<el-table-column align="center" label="电话" prop="phone"></el-table-column>
+		    <el-table-column align="center" label="小区" prop="villageName"></el-table-column>
+			<el-table-column align="center" label="条形码" prop="barCode"></el-table-column>
+			<el-table-column align="center" label="表类型" >
+				<template slot-scope="scope">
+					<div v-if="!scope.row.gasMeterType">--</div>
+				</template>
+			</el-table-column>
 			<el-table-column align="center" label="操作" width="150">
 				<template slot-scope="scope">
 					<el-button class="btn payment" size="small" @click="handlePayment(scope.$index, scope.row)" title="缴费"></el-button>
@@ -154,7 +158,7 @@
 				vm.listLoading = true;
 				//调用接口
 				let param = JSON.parse(JSON.stringify(vm.listQuery));
-		        vm.$instance.post("/proxy/bizmgr/car/findCarList", param).then(res =>{	
+		        vm.$instance.post("/proxy/household/queryList", param).then(res =>{	
 					vm.listLoading = false;
 		          	if(res.status == 200){
 						  
