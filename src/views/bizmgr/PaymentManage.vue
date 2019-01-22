@@ -12,7 +12,7 @@
 		<!-- 搜索条件 -->
 		<div class="filter-container">
 			<el-form :inline="true" :model="listQuery" class="demo-form-inline">
-				<el-form-item label="条形码">
+				<el-form-item label="条形码" class="barCode">
 					<el-input v-model="listQuery.barCode" placeholder="请输入条形码" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="住户姓名">

@@ -12,13 +12,10 @@
 		<!-- 搜索条件 -->
 		<div class="filter-container">
 			<el-form :inline="true" :model="listQuery" class="demo-form-inline">
-				<!-- <el-form-item label="条形码">
-					<el-input v-model="listQuery.carNum" placeholder="请输入车牌号" clearable></el-input>
-				</el-form-item> -->
 				<el-form-item label="住户编号">
 					<el-input v-model="listQuery.equImei" placeholder="请输入住户编号" clearable></el-input>
 				</el-form-item>
-				<el-form-item label="条形码">
+				<el-form-item label="条形码" class="barCode">
 					<el-input v-model="listQuery.equImei" placeholder="请输入条形码" clearable></el-input>
 				</el-form-item>
 				<el-form-item label="采集时间" >
