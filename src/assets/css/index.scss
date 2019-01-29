@@ -123,9 +123,10 @@ tbody tr:nth-child(odd){
     width: 240px !important;
 }
 
-.dialog .el-input{
+.dialog .el-input , .dialog .el-textarea{
     padding: 0 !important;
-    width: 80%
+    width: 80%;
+    
 }
 //车辆数选择框清除按钮
 .closeI{

@@ -47,13 +47,10 @@
 
 		
 		<!--新增弹框-->
-		<el-dialog title="新增营业厅" :visible.sync="addFormVisible" top="10%" width="350px" lock-scroll class="dialog_input"
+		<el-dialog title="新增营业厅" :visible.sync="addFormVisible" top="10%" width="450px" lock-scroll class="dialog"
 			:close-on-click-modal="false" :close-on-press-escape="false">
 			<el-form class="small-space" ref="addDialogForm"  :rules="rulesAdd" :model="addEquPerson" label-position="left" label-width="120px"
 					v-loading="addLoad" element-loading-text="拼命加载中">
-				<el-row>
-					<el-col :span="24">
-						<div class="grid-content bg-purple">
 							<el-form-item label="所属营业厅" prop="point">
 								<el-select v-model="addEquPerson.point" filterable clearable  placeholder="请选择营业厅">	
 									<el-option 	:value="'空'">空</el-option>
@@ -68,12 +65,34 @@
 							<el-form-item label="维护人" prop="equPerson">
 									<el-input v-model="addEquPerson.equPerson" :maxlength="9" placeholder="维护人" clearable></el-input>
 							   </el-form-item>		
-						</div>	   
-					</el-col>
-				</el-row>
 				<el-form-item class="formButton">
 					<el-button @click="addFormVisible = false">取 消</el-button>
 					<el-button type="primary" @click="handleCreateSubmit('addDialogForm')" class="btnColor">确 定</el-button>
+				</el-form-item>
+			</el-form>
+		</el-dialog>
+		<!--编辑弹框-->
+		<el-dialog title="编辑营业厅" :visible.sync="editFormVisible" top="10%" width="450px" lock-scroll class="dialog"
+			:close-on-click-modal="false" :close-on-press-escape="false">
+			<el-form class="small-space" ref="editDialogForm"  :rules="rulesAdd" :model="editEquPerson" label-position="left" label-width="120px"
+					v-loading="addLoad" element-loading-text="拼命加载中">
+							<el-form-item label="所属营业厅" prop="point">
+								<el-select v-model="editEquPerson.point" filterable clearable  placeholder="请选择营业厅">	
+									<el-option 	:value="'空'">空</el-option>
+									<!-- <el-option
+									v-for="item in dictionaries.car_brands"
+									:value="item.dictCode"
+									:label="item.dictName"
+									:key="item.dictCode">
+									</el-option> -->
+								</el-select>	
+							</el-form-item>						
+							<el-form-item label="维护人" prop="equPerson">
+									<el-input v-model="editEquPerson.equPerson" :maxlength="9" placeholder="维护人" clearable></el-input>
+							   </el-form-item>		
+				<el-form-item class="formButton">
+					<el-button @click="editFormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="handleCreateSubmit('editDialogForm')" class="btnColor">确 定</el-button>
 				</el-form-item>
 			</el-form>
 		</el-dialog>
@@ -118,11 +137,16 @@
 				},
 				addLoad: false,//新增加载状态
 				addFormVisible:false,
+				editFormVisible:false,
 				//唯一性验证状态记录
 				isValidate:{
 					isOk: false   //点击确定第一时间将此变量设置为true
 				},
 				addEquPerson:{
+					equPerson:"",
+					point:""
+				},
+				editEquPerson:{
 					equPerson:"",
 					point:""
 				},
@@ -197,6 +221,10 @@
 			handleCreate(){
 				this.addFormVisible = true;
 			},
+			//打开编辑弹窗
+			handleEdit() {
+			this.editFormVisible = true;
+			},
 			//新增确定
 			handleCreateSubmit(formName) {								
 				this.isValidate.isOk = true;
@@ -216,5 +244,7 @@
 	
 </script>
 <style rel="stylesheet/scss" scope lang="scss">
-	
+	.small-space .el-select{
+	width: 100%;	
+}
 </style>
