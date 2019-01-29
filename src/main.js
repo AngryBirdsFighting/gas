@@ -132,6 +132,37 @@ router.afterEach(() => {
 	}
 });
 
+//动态加载百度地图（异步）
+Vue.prototype.$instance.get("/proxy/mapKey", {}).then(res =>{
+	if(res.status == 200){
+		let scriptSrc = "http://api.map.baidu.com/getscript?v=2.0&ak=" + res.data.mapKey
+		const s = document.createElement('script')
+		s.type = 'text/javascript'
+		s.async = 'async'
+		s.src = scriptSrc
+		document.head.appendChild(s)
+		s.onload = function (res) {
+			setTimeout(function(){
+				store.commit('SET_MAPSTATE', true)
+			}, 1000)
+			let TextIconOverlaySrc = "/static/map/1.2/TextIconOverlay_min.js"
+			let MarkerClustererSrc = "/static/map/1.2/MarkerClusterer_min.js"
+			const s1 = document.createElement('script')
+			s1.type = 'text/javascript'
+			s1.src = TextIconOverlaySrc
+			const s2 = document.createElement('script')
+			s2.type = 'text/javascript'
+			s2.src = MarkerClustererSrc
+			
+			document.head.appendChild(s1)
+			document.head.appendChild(s2)
+		}
+	}
+}).catch(error => {
+	
+});
+
+
 //创建vue组件
 new Vue({
 	el: '#app',

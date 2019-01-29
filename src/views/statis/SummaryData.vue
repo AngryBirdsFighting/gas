@@ -11,8 +11,16 @@
 		<!-- 搜索条件 -->
 		<div class="filter-container">
 			<el-form :inline="true" :model="listQuery" class="demo-form-inline">
-				<el-form-item label="日期" >
-					<el-date-picker v-model="listQuery.date" ref="datePicker" :isTodayBefore="true"></el-date-picker>
+				<el-form-item label="统计周期">
+					<el-select v-model="listQuery.time" placeholder="请选择周期" @change="changeTime">
+						<el-option label="日" value="1"></el-option>
+						<el-option label="月" value="0"></el-option>
+						<el-option label="年" value="-1"></el-option>
+					</el-select>
+				</el-form-item>
+				
+				<el-form-item label="日期" class="width150">
+					<el-date-picker v-model="listQuery.date" :type="dateType" placeholder="请选择时间"></el-date-picker>
 				</el-form-item>
 				
 				<el-form-item>
@@ -51,14 +59,10 @@
 				listQuery: {
 					iDisplayLength: 10,
 					iDisplayStart: 0,
-					powerType: "",
-					useType: "",
-					driverName: "",
-					deptId: "",
-					carNum: "",
+					time: "",
 					date: "",
-					equImei: "",//设备imei
 				},
+				dateType: "date",
 			}
 		},
 		mounted() {
@@ -80,6 +84,7 @@
 			
 		},
 		methods: {
+			//画折线图
 			drawEcharts() {
 				const vm = this;
 				initEcharts().then(echarts => {
@@ -153,6 +158,27 @@
 					};
 					myCharts.setOption(option, true);
 				})
+			},
+
+			//改变统计周期，切换时间组件
+			changeTime(value) {
+				switch (value) {
+					case "1":
+						this.dateType = "date"
+						this.listQuery.date = ""
+						break;
+					case "0":
+						this.dateType = "month"
+						this.listQuery.date = ""
+						break;
+					case "-1":
+						this.dateType = "year"
+						this.listQuery.date = ""
+						break;
+					default:
+						this.listQuery.date = ""
+						break;
+				}
 			}
 		}
 	}

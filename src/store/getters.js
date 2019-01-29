@@ -4,6 +4,7 @@
  * @Description: getter可以是store 的计算属性，类似于vue中的computed计算属性
  */
 const getters = {
+  mapState:state => state.user.mapState,
   entCode: state => state.user.entCode,     //用户企业标识
   uid: state => state.user.uid,     //用户id
   routerPath: state => state.user.routerPath, //路由重定向

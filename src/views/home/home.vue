@@ -8,7 +8,7 @@
 			<el-col :span="24">
 				<div class="user_info">
 					<h2>我是首页</h2>
-					
+					<div id="carGps" class="mapTrail" style="height: 500px"></div>
 				</div>
 			</el-col>
 		</el-row>
@@ -31,14 +31,26 @@
 		computed: {
 			...mapGetters([
 				// 映射 userInfo
-				'userInfo'
+				'userInfo',	
 			]),
+			mapState () {
+          return this.$store.state.user.mapState
+          // Or return basket.getters.fruitsCount
+          // (depends on your design decisions).
+        },
 			// 计算属性的 getter
 			tableHeight: function() {
 				// `this` 指向 vm 实例
 				let height = document.documentElement.offsetHeight || document.body.offsetHeight;
 				this.heightData = height;
 				return this.heightData;
+			}
+		},
+		watch: {
+			mapState:function(newV, oldV){
+                if(this.$store.state.user.mapState){
+                    this.initMap()
+				}
 			}
 		},
 		mounted() {
@@ -48,9 +60,19 @@
 			} else{
 				$('.personal-view').css('margin-left', '220px');
 			}
+			if(this.mapState){
+				this.initMap();//初始化地图
+			}
 		},
 		methods: {
-			
+			initMap() {
+				var vm = this;
+				// 百度地图API功能
+				vm.map = new BMap.Map("carGps");    // 创建Map实例
+				vm.map.centerAndZoom("北京", 5);  // 初始化地图,设置中心点坐标和地图级别
+				vm.map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+				vm.map.enableScrollWheelZoom();     //开启鼠标滚轮缩放				
+			},
 		}
 	};
 </script>

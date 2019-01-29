@@ -15,6 +15,7 @@ import Base64 from '../../../static/base64';
 const user = {
 	//state状态 类似于vue中的data
 	state: {
+		mapState: false,//地图加载状态
 		uid: "", //用户名
 		password: "", //密码
 		entCode: "", //企业标识
@@ -24,6 +25,10 @@ const user = {
 	//Vuex 中的 mutation 类似于事件  第一个参数是state 传入额外的参数，即 mutation 的 载荷（payload）
 	//mutations,里面装着一些改变数据方法的集合，处理数据逻辑方法全部放在mutations里面，使得数据和视图分离。
 	mutations: {
+		//设置地图加载状态
+		SET_MAPSTATE: (state, mapState) => {
+			state.mapState = mapState;
+		},
 		//设置用户企业标识
 		SET_ENTCODE: (state, entCode) => {
 			state.entCode = entCode;
