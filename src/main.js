@@ -138,13 +138,12 @@ Vue.prototype.$instance.get("/proxy/mapKey", {}).then(res =>{
 		let scriptSrc = "http://api.map.baidu.com/getscript?v=2.0&ak=" + res.data.mapKey
 		const s = document.createElement('script')
 		s.type = 'text/javascript'
-		s.async = 'async'
 		s.src = scriptSrc
 		document.head.appendChild(s)
 		s.onload = function (res) {
 			setTimeout(function(){
 				store.commit('SET_MAPSTATE', true)
-			}, 1000)
+			}, 300)
 			let TextIconOverlaySrc = "/static/map/1.2/TextIconOverlay_min.js"
 			let MarkerClustererSrc = "/static/map/1.2/MarkerClusterer_min.js"
 			const s1 = document.createElement('script')
