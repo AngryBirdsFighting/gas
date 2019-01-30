@@ -34,10 +34,8 @@
 				'userInfo',	
 			]),
 			mapState () {
-          return this.$store.state.user.mapState
-          // Or return basket.getters.fruitsCount
-          // (depends on your design decisions).
-        },
+				return this.$store.state.user.mapState
+			},
 			// 计算属性的 getter
 			tableHeight: function() {
 				// `this` 指向 vm 实例
@@ -47,7 +45,7 @@
 			}
 		},
 		watch: {
-			mapState:function(newV, oldV){
+			mapState: function(newV, oldV){
                 if(this.$store.state.user.mapState){
                     this.initMap()
 				}

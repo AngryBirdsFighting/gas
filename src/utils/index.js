@@ -453,6 +453,19 @@ export  const utils = {
     },
 
     /**
+    * 把获取到的js，动态添加到页面中
+    * @param src
+    * @returns {object}
+    */
+    getMapScript: function (src) {
+        const s = document.createElement('script')
+        s.type = 'text/javascript'
+        s.src = src
+        document.head.appendChild(s)
+        return s
+    },
+
+    /**
      * 根据基站信号强度数字，获取基站信号强度图片。分为5个等级
      * simSignal范围5-31， 大于25算5级（最强），大于20算4级，大于15算3级，大于10算4级，小于10算1级（最弱）,99无信号
      */

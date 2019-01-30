@@ -1,8 +1,8 @@
 /*
  * @Author: Wang Chao 
  * @Date: 2019-01-16 13:50:55 
- * @Last Modified by: Wang Chao
- * @Last Modified time: 2019-01-18 11:17:33
+ * @Last Modified by: zhipeng qiao
+ * @Last Modified time: 2019-01-30 10:02:02
  * @Description:  IC卡业务
  */
 
@@ -430,7 +430,7 @@
 	import Import from '../../components/Import'; //导入弹框组件
 	import DepartSelect from '../../components/DepartSelect';
 	import Pagination from '../../components/Pagination';
-		import DateTimePicker from '../../components/DateTimePicker';//日期组件
+	import DateTimePicker from '../../components/DateTimePicker';//日期组件
 
 	export default {
 		components: {
