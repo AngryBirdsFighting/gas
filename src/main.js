@@ -136,9 +136,9 @@ router.afterEach(() => {
 
 //动态加载百度地图（异步）
 Vue.prototype.$instance.get("/proxy/mapKey", {}).then(res =>{
-	const TextIconOverlaySrc = "/static/map/1.2/TextIconOverlay_min.js"
-	const MarkerClustererSrc = "/static/map/1.2/MarkerClusterer_min.js"
-	const mapSrc = "http://api.map.baidu.com/getscript?v=2.0&ak="
+	let TextIconOverlaySrc = "/static/map/1.2/TextIconOverlay_min.js"
+	let MarkerClustererSrc = "/static/map/1.2/MarkerClusterer_min.js"
+	let mapSrc = "http://api.map.baidu.com/getscript?v=2.0&ak="
 	if(res.status == 200){
 		mapSrc = mapSrc + res.data.mapKey
 		let map = utils.getMapScript(mapSrc)
