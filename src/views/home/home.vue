@@ -3,12 +3,11 @@
  * 	  @Description: 个人信息组件 
  */
 <template>
-	<div class="app-container personal-view" :style="{  height: tableHeight + 'px' }">
+	<div class="app-container personal-view" :style="{ height: tableHeight + 'px' }">
 		<el-row :gutter="24">
 			<el-col :span="24">
 				<div class="user_info">
-					<h2>我是首页</h2>
-					<div id="carGps" class="mapTrail" style="height: 500px"></div>
+					<div id="carGps" class="mapTrail" :style="{ height: tableHeight - 30 + 'px' }"></div>
 				</div>
 			</el-col>
 		</el-row>
@@ -25,7 +24,6 @@
 		data() {
 			return {
 				heightData: 540
-
 			}
 		},
 		computed: {
@@ -66,10 +64,10 @@
 			initMap() {
 				var vm = this;
 				// 百度地图API功能
-				vm.map = new BMap.Map("carGps");    // 创建Map实例
-				vm.map.centerAndZoom("北京", 5);  // 初始化地图,设置中心点坐标和地图级别
-				vm.map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
-				vm.map.enableScrollWheelZoom();     //开启鼠标滚轮缩放				
+				vm.map = new BMap.Map("carGps");  // 创建Map实例
+				vm.map.centerAndZoom("西安", 6);  // 初始化地图,设置中心点坐标和地图级别
+				vm.map.setCurrentCity("西安");    // 设置地图显示的城市 此项是必须设置的
+				vm.map.enableScrollWheelZoom();  //开启鼠标滚轮缩放				
 			},
 		}
 	};
